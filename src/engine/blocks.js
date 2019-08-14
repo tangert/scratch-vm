@@ -299,6 +299,7 @@ class Blocks {
      * @param {object} e Blockly "block" or "variable" event
      */
     blocklyListen (e) {
+
         // Validate event
         if (typeof e !== 'object') return;
         if (typeof e.blockId !== 'string' && typeof e.varId !== 'string' &&
@@ -498,10 +499,17 @@ class Blocks {
                     }
                     delete block.comment;
                 }
-
                 this.emitProjectChanged();
             }
             break;
+        case 'show_block_context_menu':
+          console.log("Showinig context menu");
+          break;
+        case 'block_suggest':
+          console.log("Suggesting blocks");
+          this.runtime.emitBlockSuggest(e.blockId)
+          // console.log(e.blockId)
+          break;
         }
     }
 

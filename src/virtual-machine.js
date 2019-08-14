@@ -152,6 +152,11 @@ class VirtualMachine extends EventEmitter {
             this.emit(Runtime.HAS_CLOUD_DATA_UPDATE, hasCloudData);
         });
 
+        // Block suggestions
+        this.runtime.on(Runtime.BLOCK_SUGGEST, blockId => {
+            this.emit(Runtime.BLOCK_SUGGEST, blockId);
+        });
+
         this.extensionManager = new ExtensionManager(this.runtime);
 
         // Load core extensions

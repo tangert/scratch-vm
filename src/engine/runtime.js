@@ -663,6 +663,21 @@ class Runtime extends EventEmitter {
     }
 
     /**
+     * @const {string}
+     */
+    static get SHOW_BLOCK_CONTEXT_MENU () {
+        return 'SHOW_BLOCK_CONTEXT_MENU';
+    }
+
+    /**
+     * @const {string}
+     */
+    static get BLOCK_SUGGEST () {
+        return 'BLOCK_SUGGEST';
+    }
+
+
+    /**
      * How rapidly we try to step threads by default, in ms.
      */
     static get THREAD_STEP_INTERVAL () {
@@ -1934,6 +1949,7 @@ class Runtime extends EventEmitter {
      * inactive threads after each iteration.
      */
     _step () {
+      // console.log("stepping")
         if (this.profiler !== null) {
             if (stepProfilerId === -1) {
                 stepProfilerId = this.profiler.idByName('Runtime._step');
@@ -2189,6 +2205,11 @@ class Runtime extends EventEmitter {
      */
     visualReport (blockId, value) {
         this.emit(Runtime.VISUAL_REPORT, {id: blockId, value: String(value)});
+    }
+
+    // CONTEXT MENU EVENTS
+    emitBlockSuggest(blockId) {
+      this.emit(Runtime.BLOCK_SUGGEST, blockId)
     }
 
     /**
