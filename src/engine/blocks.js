@@ -502,14 +502,17 @@ class Blocks {
                 this.emitProjectChanged();
             }
             break;
-        case 'show_block_context_menu':
-          console.log("Showinig context menu");
-          break;
-        case 'block_suggest':
-          console.log("Suggesting blocks");
-          this.runtime.emitBlockSuggest(e.blockId)
-          // console.log(e.blockId)
-          break;
+
+        // Previous solution
+        // Now just bind it to the change listener directly in GUI.
+        // case 'show_block_context_menu':
+        //   console.log("Showinig context menu");
+        //   break;
+        // case 'block_suggest':
+        //   console.log("Suggesting blocks");
+        //   this.runtime.emitBlockSuggest(e.blockId)
+        //   // console.log(e.blockId)
+        //   break;
         }
     }
 

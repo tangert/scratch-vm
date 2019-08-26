@@ -2354,6 +2354,7 @@ class Runtime extends EventEmitter {
      * Report that the project has loaded in the Virtual Machine.
      */
     emitProjectLoaded () {
+      // console.log("EMITTING PROJECT LOAD")
         this.emit(Runtime.PROJECT_LOADED);
     }
 
