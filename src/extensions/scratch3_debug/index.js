@@ -8,6 +8,9 @@ const log = require('../../util/log');
 /**
  * Manage communication with a Boost peripheral over a Bluetooth Low Energy client socket.
  */
+
+const EMOJIS = ['❤️','🐛','😯','⚒️','❓','✅'];
+
 class Debug {
     constructor (runtime) {
         /**
@@ -16,81 +19,68 @@ class Debug {
          * @private
          */
         this._runtime = runtime;
-        this.numLabels = 1;
     }
     // Can extensions maintain state?
     // Have to call in from the vm/runtime to retrieve stuff
     getInfo() {
       console.log("calling get info")
         return {
-            id: "debugging",
-            name: "Tyler's experiments",
+            id: "debug",
+            name: "Debug",
+            color1: "#FFE28A",
+            color2: "#BFA968",
+            color3: "#BFA968",
             blocks: [{
                     opcode: "emojilabel",
                     blockType: BlockType.COMMAND,
-                    text: this.buildEmojiList(this.numLabels),
+                    text: '[emoji]',
                     arguments: {
-                        emoji0: {
+                        emoji: {
                             type: ArgumentType.STRING,
                             defaultValue: "❤️",
                             menu: 'EMOJI_LABELS',
-                        },
-                        emoji1: {
-                            type: ArgumentType.STRING,
-                            defaultValue: "❤️",
-                            menu: 'EMOJI_LABELS',
-                        },
+                        }
                     }
                 },
                 {
-                      opcode: "surprise",
-                      blockType: BlockType.COMMAND,
-                      text: "Surprise!",
-                      arguments: {}
-                  },
-                {
-                      opcode: "suggestion",
-                      blockType: BlockType.COMMAND,
-                      text: "Suggestion!",
-                      arguments: {}
-                  }
+                    opcode: 'comment',
+                    text: formatMessage({
+                        default: '[WORDS]',
+                        description: 'write down a comment'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        WORDS: {
+                            type: ArgumentType.STRING,
+                            defaultValue: "Write a comment here."
+                        }
+                    }
+                },
               ],
           //we will get back to this in a later tutorial
           menus: {
             EMOJI_LABELS: {
                 acceptReporters: false,
-                items: ['❤️','🐛','😯','⚒️','❓','✅']
-            },
+                items: EMOJIS
+            }
           }
     }
   }
 
   buildEmojiList(num){
     let str = ""
-    for(let i in [...Array(num).keys()]) {
+    for(let i in EMOJIS) {
       str += `[emoji${i}]`
     }
     return str
   }
 
-
-  surprise(){
-    console.log("Surprise!")
-  }
-
-  suggestion(){
-    console.log("suggestion block!")
-  }
-  
   emojilabel(){
-    this.numLabels +=1;
-    this.getInfo()
-    console.log(this.numLabels)
-    console.log("making an emoji label!")
   }
-  // motion_glideto() {
-  //   console.log("wow")
-  // }
+
+  comment(){
+
+  }
 }
 
 // Scratch.extensions.register(new NitroBlock());
